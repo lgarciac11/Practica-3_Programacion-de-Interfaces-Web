@@ -1,19 +1,15 @@
-import { Wizard } from "@/types";
+import { WizardAPI } from "@/types";
 import Link from "next/link";
 
-const WizardComponent = ({ data }: { data: Wizard }) => (
+const WizardComponent = ({ data }: { data: WizardAPI }) => (
   <div>
     <Link href="/">Back</Link>
-    <p>firstName: {data.firstName}</p>
-    <p>lastName: {data.lastName}</p>
-    <h2>Elixirs</h2>
-    <ul>
-      {data.elixirs.map((elixirs) => (
-        <li key={elixirs.name}></li>
-      ))}
-    </ul>
-    
-  </div>
+    <ul>{data.elixirs.map((elixir) => (
+  <li key={elixir.id}> {elixir.name}</li>
+  ))}</ul>
+  <h1>{data.firstName}</h1>
+  <p>{data.lastName}</p>
+</div>
 );
 
 export default WizardComponent;

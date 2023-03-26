@@ -1,27 +1,34 @@
-import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSideProps, NextPage } from 'next'
+import { WizardAPI } from '@/types'
 
-import WizardComponent from "@/components/Wizard";
-import { Wizard, WizardAPI } from "@/types";
+//no funciona
+type Props = {
+  wizard: WizardAPI
+}
 
-export const getServerSideProps: GetServerSideProps<{wizard: Wizard}> = async (context) => {
-  const { id } = context.query;
+const WizardDetail: NextPage<Props> = ({ wizard }) => {
+  return (
+    <div>
+      <h1>{wizard.firstName} {wizard.lastName}</h1>
+      <ul>
+        {wizard.elixirs.map((elixir) => (
+          <li key={elixir.id}>{elixir.name}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
-  const res = await fetch(`https://wizard-world-api.herokuapp.com/wizards/${id}`);
-  const dataAPI: WizardAPI = await res.json();
-  const wizard: Wizard = {
-    ...dataAPI,
-  };
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+  const id = params?.id as string
+  const res = await fetch(`http://localhost:3000/api/wizard/${id}`)
+  const wizard = await res.json()
 
   return {
     props: {
-      wizard,
-    },
-  };
-};
+      wizard
+    }
+  }
+}
 
-const WizardPage = ({ wizard }: { wizard: Wizard }) => {
-  console.log({wizard: wizard || {test: "hola"}})
-  return <WizardComponent data={wizard} />;
-};
-
-export default WizardPage;
+export default WizardDetail
