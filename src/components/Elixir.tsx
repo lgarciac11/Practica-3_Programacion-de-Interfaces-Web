@@ -1,28 +1,20 @@
-import { Elixir } from "@/types";
-import Link from "next/link";
+import { ElixirAPI } from "@/types";
 
-const ElixirComponent = ({ data }: { data: Elixir }) => (
+const ElixirComponent = ({ data }: { data: ElixirAPI }) => (
   <div>
-    <Link href="/">Back</Link>
     <h1>{data.name}</h1>
-    <p>Effect: {data.effect}</p>
-    <p>SideEffects: {data.sideEffects}</p>
-    <p>Characteristics: {data.characteristics}</p>
-    <p>Time: {data.time}</p>
-    <p>Difficulty: {data.difficulty}</p>
-    <h2>Ingredients</h2>
-    <ul>
-      {data.ingredients.map((ingredients) => (
-        <li key={ingredients.name}></li>
-      ))}
-    </ul>
-    <h2>Inventors</h2>
-    <ul>
-      {data.inventors.map((inventors) => (
-        <li key={inventors.firstName}>{inventors.lastName}</li>
-      ))}
-    </ul>
-    <p>Manufacturer: {data.manufacturer}</p>
+    <p>{data.effect}</p>
+    <p>{data.sideEffects}</p>
+    <p>{data.characteristics}</p>
+    <p>{data.time}</p>
+    <p>{data.difficulty}</p>
+    <ul>{data.ingredients.map((ingrendient) => (
+      <li key={ingrendient.id}>{ingrendient.name}</li>
+    ))}</ul>
+    <ul>{data.inventors.map((inventor) => (
+      <li key={inventor.id}>{inventor.firstName} {inventor.lastName}</li>
+    ))}</ul>
+    <p>{data.manufacturer}</p>
   </div>
 );
 
